@@ -15,6 +15,11 @@ class Entry(Model):
         database = db
 
 
+def initialize():
+    db.connect()
+    db.create_table(Entry, safe=True)
+
+
 def menu_loop():
     """Menu Loop"""
     pass
