@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 import datetime
 
+from collections import OrderedDict
 from peewee import *
 
 db = SqliteDatabase('diary.db')
@@ -22,7 +25,17 @@ def initialize():
 
 def menu_loop():
     """Menu Loop"""
-    pass
+    choice = None
+
+    while choice != 'q':
+        print("Enter 'q' to exit")
+        for key, value in menu.items():
+            print("{}) {}".format(key, value.__doc__))
+
+        choice = input("Action: ").lower().strip()
+
+        if choice in menu:
+            menu[choice]()
 
 
 def add_entry():
@@ -35,3 +48,12 @@ def view_entries():
 
 def remove_entry(entry):
     """Removes a specific entry from the database"""
+
+menu = OrderedDict([
+    ('a', add_entry),
+    ('v', view_entries)
+])
+
+if __name__ == '__main__':
+    initialize()
+    menu_loop()
